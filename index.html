@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ChatrapatiAI</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #38bdf8;
+        }
+
+        h2 {
+            margin-top: 30px;
+            color: #facc15;
+        }
+
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #38bdf8;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #0ea5e9;
+        }
+
+        .box {
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1> ChatrapatiAI</h1>
+    <p style="text-align:center;">Your Personal AI Memory System</p>
+
+    <div class="box">
+        <h2>Add Note</h2>
+        <form method="POST">
+            <input type="hidden" name="action" value="add">
+            <textarea name="note" rows="3" placeholder="Write your note..."></textarea>
+            <button type="submit">Save Note</button>
+        </form>
+    </div>
+
+    <div class="box">
+        <h2>Search Notes</h2>
+        <form method="POST">
+            <input type="hidden" name="action" value="search">
+            <input type="text" name="query" placeholder="Search something...">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="box">
+        <h2>Ask AI</h2>
+        <form method="POST">
+            <input type="hidden" name="action" value="ask">
+            <input type="text" name="query" placeholder="Ask something from your notes...">
+            <button type="submit">Ask</button>
+        </form>
+    </div>
+
+    {% if result.message %}
+        <div class="box">
+            <p>{{ result.message }}</p>
+        </div>
+    {% endif %}
+
+    {% if result.search %}
+        <div class="box">
+            <h3>Results:</h3>
+            <ul>
+                {% for r in result.search %}
+                    <li>{{ r }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if result.answer %}
+        <div class="box">
+            <h3>Answer:</h3>
+            <p>{{ result.answer }}</p>
+        </div>
+    {% endif %}
+
+    <div class="box">
+        <h2>All Notes</h2>
+        <ul>
+            {% for n in notes %}
+                <li>{{ n }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>
+
+</body>
+</html>
